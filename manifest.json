@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "FillForm / फॉर्म फिलर",
+  "version": "1.0.0",
+  "description": "Fill Indian government forms automatically using document photos / दस्तावेज़ फोटो से सरकारी फॉर्म भरें",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "FillForm / फॉर्म फिलर",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content/scanner.js", "content/filler.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+F",
+        "mac": "Alt+F"
+      },
+      "description": "Open FillForm / फॉर्म फिलर खोलें"
+    }
+  },
+  "options_page": "settings/settings.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

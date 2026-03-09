@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FillForm / फॉर्म फिलर</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-title">
+      <span class="header-logo">📋</span>
+      <span class="header-text">FillForm / <span class="header-hindi">फॉर्म फिलर</span></span>
+    </div>
+    <div class="header-actions">
+      <button id="langToggle" class="btn-icon" title="भाषा बदलें / Change Language">
+        <span id="langLabel">हि/En</span>
+      </button>
+      <button id="settingsBtn" class="btn-icon" title="सेटिंग्स / Settings">
+        ⚙️
+      </button>
+    </div>
+  </header>
+
+  <!-- Step indicator -->
+  <div class="step-indicator">
+    <div class="step-dot active" id="dot1">1</div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot" id="dot3">3</div>
+  </div>
+
+  <!-- Offline banner -->
+  <div class="offline-banner" id="offlineBanner">
+    📡 इंटरनेट नहीं है / No internet connection
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Step 1: Upload Documents -->
+    <section class="step-section" id="step1">
+      <div class="step-header">
+        <span class="step-badge">①</span>
+        <h2 class="step-title" data-i18n="step1Title">दस्तावेज़ अपलोड करें / Upload Documents</h2>
+      </div>
+      <div class="step-content">
+        <!-- Hidden file input -->
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          multiple
+          hidden
+        />
+        <!-- Upload button -->
+        <button id="uploadBtn" class="btn btn-secondary btn-upload">
+          <span class="btn-icon-inline">📷</span>
+          <span data-i18n="uploadBtn">फोटो चुनें / Select Photos</span>
+        </button>
+
+        <!-- Thumbnail preview strip -->
+        <div id="thumbnailStrip" class="thumbnail-strip" style="display:none;">
+          <!-- Thumbnails added dynamically -->
+        </div>
+
+        <!-- Extract button -->
+        <button id="extractBtn" class="btn btn-primary" disabled>
+          <span id="extractBtnSpinner" class="spinner" style="display:none;"></span>
+          <span id="extractBtnText" data-i18n="extractBtn">डेटा निकालें / Extract Data</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Previous data banner (shown when session data exists) -->
+    <div id="prevDataBanner" class="prev-data-banner" style="display:none">
+      <div>
+        <span>📋 पिछला डेटा मिला / Previous data found</span>
+        <span id="prevDataName" style="font-weight:600"></span>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button id="usePrevDataBtn" class="btn btn-sm btn-primary">उपयोग करें / Use</button>
+        <button id="discardPrevBtn" class="btn btn-sm btn-secondary">मिटाएं / Discard</button>
+      </div>
+    </div>
+
+    <!-- Status area -->
+    <div id="statusArea" class="status" style="display:none;"></div>
+
+    <!-- Connector line -->
+    <div class="step-connector"></div>
+
+    <!-- Step 2: Review Data -->
+    <section class="step-section" id="step2" style="display:none;">
+      <div class="step-header">
+        <span class="step-badge">②</span>
+        <h2 class="step-title" data-i18n="step2Title">डेटा जांचें / Review Data</h2>
+      </div>
+      <div class="step-content">
+        <table class="review-table" id="reviewTable">
+          <thead>
+            <tr>
+              <th>फ़ील्ड / Field</th>
+              <th>मान / Value</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="reviewTableBody">
+            <!-- Rows added dynamically -->
+          </tbody>
+        </table>
+        <button id="addFieldBtn" class="btn btn-secondary btn-sm">
+          <span>＋</span>
+          <span data-i18n="addFieldBtn">फ़ील्ड जोड़ें / Add Field</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Connector line -->
+    <div class="step-connector step-connector-2" style="display:none;"></div>
+
+    <!-- Step 3: Fill Form -->
+    <section class="step-section" id="step3" style="display:none;">
+      <div class="step-header">
+        <span class="step-badge">③</span>
+        <h2 class="step-title" data-i18n="step3Title">फॉर्म भरें / Fill Form</h2>
+      </div>
+      <div class="step-content">
+        <button id="fillBtn" class="btn btn-primary btn-fill">
+          <span id="fillBtnSpinner" class="spinner" style="display:none;"></span>
+          <span id="fillBtnText">🚀 <span data-i18n="fillBtn">फॉर्म भरें / Fill Form</span></span>
+          <span class="field-count-badge" id="fieldCountBadge" style="display:none"></span>
+        </button>
+
+        <!-- Status message -->
+        <div id="fillStatus" class="fill-status" style="display:none;"></div>
+
+        <!-- Mapping Review (expandable) -->
+        <div class="mapping-section" id="mappingSection" style="display:none">
+          <button class="toggle-btn" id="toggleMappingBtn">
+            <span data-i18n-hi="मैपिंग देखें" data-i18n-en="Show Mapping">मैपिंग देखें / Show Mapping</span>
+            <span class="toggle-icon" id="toggleMappingIcon">▼</span>
+          </button>
+
+          <div id="mappingContent" style="display:none">
+            <p class="mapping-help-text">
+              <span data-i18n-hi="गलत मैपिंग को ठीक करें और दोबारा भरें" data-i18n-en="Fix wrong mappings and re-fill">
+                गलत मैपिंग को ठीक करें / Fix wrong mappings
+              </span>
+            </p>
+
+            <table class="mapping-table" id="mappingTable">
+              <thead>
+                <tr>
+                  <th>फॉर्म फ़ील्ड / Form Field</th>
+                  <th>डेटा / Data</th>
+                  <th>मान / Value</th>
+                  <th>🔍</th>
+                </tr>
+              </thead>
+              <tbody id="mappingTableBody">
+                <!-- Rows populated by JS -->
+              </tbody>
+            </table>
+
+            <div class="mapping-actions">
+              <button class="btn btn-primary" id="refillBtn">
+                <span data-i18n-hi="दोबारा भरें" data-i18n-en="Re-fill with corrections">दोबारा भरें / Re-fill</span>
+              </button>
+              <button class="btn btn-secondary" id="addMissingFieldBtn">
+                <span data-i18n-hi="फ़ील्ड जोड़ें" data-i18n-en="Add missing field">+ फ़ील्ड जोड़ें / Add field</span>
+              </button>
+            </div>
+
+            <!-- Pick mode banner (shown when user clicks "Add missing field") -->
+            <div id="pickModeBanner" style="display:none" class="pick-mode-banner">
+              <span>👆 पेज पर फ़ील्ड क्लिक करें / Click a field on the page</span>
+              <button id="cancelPickBtn">रद्द करें / Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <button id="clearBtn" class="btn btn-danger btn-sm">
+      🗑️ <span data-i18n="clearBtn">डेटा मिटाएं / Clear All Data</span>
+    </button>
+    <span class="footer-version">v1.0.0</span>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

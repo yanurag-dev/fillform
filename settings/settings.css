@@ -1,0 +1,473 @@
+/* ============================================================
+   FillForm — Settings Page Styles
+   ============================================================ */
+
+/* Google Fonts are loaded in HTML. System font stack as fallback. */
+:root {
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --primary-light: #EEF2FF;
+  --danger: #DC2626;
+  --danger-hover: #B91C1C;
+  --danger-light: #FEF2F2;
+  --secondary: #6B7280;
+  --secondary-hover: #4B5563;
+  --success: #16A34A;
+  --success-bg: #F0FDF4;
+  --warning: #D97706;
+  --warning-bg: #FFFBEB;
+  --error: #DC2626;
+  --error-bg: #FEF2F2;
+  --border: #E5E7EB;
+  --text: #111827;
+  --text-muted: #6B7280;
+  --bg: #F9FAFB;
+  --card-bg: #FFFFFF;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ---- Layout ---- */
+
+.page-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+/* ---- Header ---- */
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.back-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* ---- Section Cards ---- */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.section-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.section-desc .en {
+  display: block;
+  margin-top: 2px;
+}
+
+/* ---- Input Styles ---- */
+
+.input-row {
+  margin-bottom: 14px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.input-group:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.input-group input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text);
+  background: transparent;
+  min-width: 0;
+}
+
+.input-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  border-left: 1.5px solid var(--border);
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-muted);
+  transition: background 0.15s;
+}
+
+.btn-icon:hover {
+  background: var(--bg);
+}
+
+/* ---- Buttons ---- */
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--bg);
+  color: var(--secondary);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--border);
+  color: var(--secondary-hover);
+}
+
+.btn-danger {
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1.5px solid #FECACA;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #FECACA;
+}
+
+.btn-sm {
+  padding: 5px 12px;
+  font-size: 0.82rem;
+}
+
+/* ---- Status Messages ---- */
+
+.status-message {
+  font-size: 0.88rem;
+  min-height: 1.4em;
+  padding: 2px 0;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.status-message.success {
+  color: var(--success);
+}
+
+.status-message.error {
+  color: var(--error);
+}
+
+.status-message.loading {
+  color: var(--warning);
+}
+
+/* ---- Help Text ---- */
+
+.help-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.help-text a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.help-text a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Radio Group ---- */
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.93rem;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.radio-label:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.radio-label input[type="radio"] {
+  accent-color: var(--primary);
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.radio-label input[type="radio"]:checked + span {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* ---- Mappings ---- */
+
+.mappings-count {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+thead {
+  background: var(--bg);
+}
+
+th {
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Striped rows */
+tbody tr:nth-child(even) {
+  background: #FAFAFA;
+}
+
+tbody tr:hover {
+  background: var(--primary-light);
+}
+
+.empty-row td {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 20px;
+  font-style: italic;
+}
+
+.url-cell {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.82rem;
+  color: var(--text);
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-cell {
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+/* ---- How-to Steps ---- */
+
+.steps-list {
+  padding-left: 0;
+  list-style: none;
+  counter-reset: steps;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.steps-list li {
+  counter-increment: steps;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.steps-list li::before {
+  content: counter(steps);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+/* ---- Keyboard shortcut key display ---- */
+
+kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 0.82rem;
+  font-family: 'Courier New', Courier, monospace;
+  background: #F3F4F6;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 #9CA3AF;
+  color: #374151;
+}
+
+/* ---- Footer ---- */
+
+.page-footer {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 32px;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 480px) {
+  .page-wrapper {
+    padding: 16px 12px 40px;
+  }
+
+  .card {
+    padding: 18px 14px;
+  }
+
+  .page-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .url-cell {
+    max-width: 160px;
+  }
+}

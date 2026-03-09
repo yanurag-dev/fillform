@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings / सेटिंग्स</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="page-header">
+      <h1>⚙️ सेटिंग्स / Settings</h1>
+      <a href="#" id="backLink" class="back-link">← FillForm पर वापस जाएं / Back to FillForm</a>
+    </header>
+
+    <!-- Section 1: API Key -->
+    <section class="card" id="section-api-key">
+      <h2 class="section-title">🔑 Gemini API Key / जेमिनी API Key</h2>
+      <p class="section-desc">
+        अपना मुफ्त API key Google AI Studio से प्राप्त करें। AI सुविधाएं सक्षम करने के लिए इसे नीचे दर्ज करें।<br />
+        <span class="en">Get your free API key from Google AI Studio. Enter it below to enable AI features.</span>
+      </p>
+
+      <div class="input-row">
+        <div class="input-group">
+          <input
+            type="password"
+            id="apiKeyInput"
+            placeholder="AIza..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="button" id="toggleApiKey" class="btn-icon" title="Show/Hide">👁️</button>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="saveApiKey" class="btn btn-primary">💾 सेव करें / Save</button>
+        <button type="button" id="testApiKey" class="btn btn-secondary">🔌 टेस्ट करें / Test API Key</button>
+      </div>
+
+      <div id="apiKeyStatus" class="status-message" aria-live="polite"></div>
+
+      <p class="help-text">
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">
+          API key कैसे पाएं? / How to get API key? ↗
+        </a>
+      </p>
+    </section>
+
+    <!-- Section 2: Language -->
+    <section class="card" id="section-language">
+      <h2 class="section-title">🌐 भाषा / Language</h2>
+      <p class="section-desc">
+        Extension में कौन सी भाषा दिखाएं? / Which language to show in the extension?
+      </p>
+
+      <div class="radio-group" role="radiogroup" aria-label="Language preference">
+        <label class="radio-label">
+          <input type="radio" name="language" value="both" />
+          <span>हिंदी और English दोनों / Both Hindi and English</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="language" value="hi" />
+          <span>केवल हिंदी / Hindi only</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="language" value="en" />
+          <span>English only / केवल अंग्रेजी</span>
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="saveLanguage" class="btn btn-primary">💾 सेव करें / Save</button>
+      </div>
+
+      <div id="languageStatus" class="status-message" aria-live="polite"></div>
+    </section>
+
+    <!-- Section 3: Cached Mappings -->
+    <section class="card" id="section-mappings">
+      <h2 class="section-title">🗂️ कैश्ड मैपिंग / Cached Mappings</h2>
+      <p class="section-desc">
+        Extension फॉर्म फ़ील्ड मैपिंग सेव करता है ताकि हर बार AI को call न करना पड़े।<br />
+        <span class="en">The extension saves form field mappings so it doesn't need to call AI every time.</span>
+      </p>
+
+      <p class="mappings-count" id="mappingsCount">0 मैपिंग कैश्ड / 0 mappings cached</p>
+
+      <div class="table-wrapper">
+        <table id="mappingsTable">
+          <thead>
+            <tr>
+              <th>URL Pattern</th>
+              <th>Last Used / अंतिम उपयोग</th>
+              <th>Actions / कार्रवाई</th>
+            </tr>
+          </thead>
+          <tbody id="mappingsTableBody">
+            <tr class="empty-row">
+              <td colspan="3">कोई मैपिंग नहीं / No mappings cached</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="clearAllMappings" class="btn btn-danger">
+          🗑️ सभी मिटाएं / Clear All Cache
+        </button>
+      </div>
+
+      <div id="mappingsStatus" class="status-message" aria-live="polite"></div>
+    </section>
+
+    <!-- Section 4: How to Use -->
+    <section class="card" id="section-howto">
+      <h2 class="section-title">📖 कैसे उपयोग करें / How to Use</h2>
+      <ol style="line-height: 2; padding-left: 20px; color: #374151;">
+        <li>सेटिंग्स में Gemini API key सेव करें / Save your Gemini API key above</li>
+        <li>जिस फॉर्म को भरना है वो वेबसाइट खोलें / Open the form website</li>
+        <li>Extension icon क्लिक करें या <kbd>Alt+F</kbd> दबाएं / Click the extension icon or press <kbd>Alt+F</kbd></li>
+        <li>दस्तावेज़ की फोटो अपलोड करें (आधार, मार्कशीट, आदि) / Upload document photos</li>
+        <li>"डेटा निकालें" क्लिक करें / Click "Extract Data"</li>
+        <li>डेटा जांचें और सही करें / Review and correct the extracted data</li>
+        <li>"फॉर्म भरें" क्लिक करें / Click "Fill Form"</li>
+        <li>फॉर्म सबमिट करें / Submit the form</li>
+        <li>अगले पेज पर दोबारा "फॉर्म भरें" क्लिक करें / For multi-page forms, click "Fill Form" again on each page</li>
+      </ol>
+    </section>
+
+    <!-- Section 5: Troubleshooting -->
+    <section class="card" id="section-troubleshooting">
+      <h2 class="section-title">🔧 समस्या निवारण / Troubleshooting</h2>
+      <ul style="line-height: 2; padding-left: 20px; color: #374151;">
+        <li><strong>फ़ील्ड नहीं भरे / Fields not filling</strong> — पेज रीफ्रेश करें और दोबारा कोशिश करें / Refresh the page and try again</li>
+        <li><strong>API key error</strong> — ऊपर सेटिंग्स में API key जांचें / Check your API key in settings above</li>
+        <li><strong>डेटा गलत निकला / Wrong data extracted</strong> — दस्तावेज़ की साफ फोटो लें / Take a clearer photo of the document</li>
+        <li><strong>गलत मैपिंग / Wrong mapping</strong> — नीचे उस URL की कैश मैपिंग मिटाएं / Delete that URL's cached mapping below</li>
+        <li><strong>इंटरनेट नहीं / No internet</strong> — केवल कैश्ड फॉर्म के लिए काम करेगा / Only cached forms will work offline</li>
+      </ul>
+    </section>
+
+    <footer class="page-footer">
+      <p>FillForm / फॉर्म फिलर &mdash; Powered by Gemini AI</p>
+    </footer>
+  </div>
+
+  <script type="module" src="settings.js"></script>
+</body>
+</html>
