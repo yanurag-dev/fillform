@@ -116,18 +116,20 @@ fileInput.addEventListener('change', (e) => {
   if (!files.length) return;
 
   files.forEach(file => {
+    const isPdf = file.type === 'application/pdf';
     const reader = new FileReader();
     reader.onload = (ev) => {
       const dataUrl = ev.target.result;
       const base64 = dataUrl.split(',')[1];
-      const mimeType = file.type || 'image/jpeg';
+      const mimeType = isPdf ? 'application/pdf' : (file.type || 'image/jpeg');
 
       const imgObj = {
         base64,
         mimeType,
         documentType: 'aadhaar',
         name: file.name,
-        dataUrl,
+        dataUrl: isPdf ? null : dataUrl, // PDFs have no image preview
+        isPdf,
       };
       uploadedImages.push(imgObj);
       renderThumbnails();
@@ -147,10 +149,18 @@ function renderThumbnails() {
     const item = document.createElement('div');
     item.className = 'thumbnail-item';
 
-    const imgEl = document.createElement('img');
-    imgEl.src = img.dataUrl;
-    imgEl.className = 'thumbnail-img';
-    imgEl.alt = img.name;
+    let imgEl;
+    if (img.isPdf) {
+      imgEl = document.createElement('div');
+      imgEl.className = 'thumbnail-img thumbnail-pdf';
+      imgEl.title = img.name;
+      imgEl.innerHTML = '📄<span class="pdf-label">PDF</span>';
+    } else {
+      imgEl = document.createElement('img');
+      imgEl.src = img.dataUrl;
+      imgEl.className = 'thumbnail-img';
+      imgEl.alt = img.name;
+    }
 
     const removeBtn = document.createElement('button');
     removeBtn.className = 'thumbnail-remove';
@@ -278,10 +288,12 @@ async function handleExtractData() {
 
   try {
     // Collect processed images from state (already base64 from FileReader)
+    // PDFs are sent as-is; images are sent as-is (already resized on upload if needed)
     const processedImages = uploadedImages.map(img => ({
       base64: img.base64,
       mimeType: img.mimeType,
       documentType: img.documentType,
+      isPdf: img.isPdf || false,
     }));
 
     const response = await chrome.runtime.sendMessage({
