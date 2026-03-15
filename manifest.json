@@ -3,7 +3,7 @@
   "name": "FillForm / फॉर्म फिलर",
   "version": "1.0.0",
   "description": "Fill Indian government forms automatically using document photos / दस्तावेज़ फोटो से सरकारी फॉर्म भरें",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "tabs", "storage"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "action": {
     "default_popup": "popup/popup.html",
