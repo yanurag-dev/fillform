@@ -1,5 +1,5 @@
 import { applyLanguage, getText, getBilingual } from '../lib/i18n.js';
-import { getApiKey, getSessionData, setSessionData, clearSessionData } from '../lib/storage.js';
+import { getApiKey, getSessionData, setSessionData, clearSessionData, getSessionImages, setSessionImages } from '../lib/storage.js';
 
 // ========== State ==========
 let uploadedImages = []; // [{base64, mimeType, documentType, name}]
@@ -134,6 +134,7 @@ fileInput.addEventListener('change', (e) => {
       uploadedImages.push(imgObj);
       renderThumbnails();
       updateExtractBtn();
+      persistImages();
     };
     reader.readAsDataURL(file);
   });
@@ -170,6 +171,7 @@ function renderThumbnails() {
       uploadedImages.splice(idx, 1);
       renderThumbnails();
       updateExtractBtn();
+      persistImages();
     });
 
     const typeSelect = document.createElement('select');
@@ -203,6 +205,10 @@ function renderThumbnails() {
 
 function updateExtractBtn() {
   extractBtn.disabled = uploadedImages.length === 0;
+}
+
+function persistImages() {
+  setSessionImages(uploadedImages).catch(() => {});
 }
 
 // ========== Status Area ==========
@@ -852,6 +858,14 @@ settingsBtn.addEventListener('click', () => {
     const savedLang = result.language || 'both';
     setLanguage(savedLang);
   });
+
+  // Restore uploaded images from session (survive popup close/reopen)
+  const savedImages = await getSessionImages();
+  if (savedImages && savedImages.length > 0) {
+    uploadedImages = savedImages;
+    renderThumbnails();
+    updateExtractBtn();
+  }
 
   // Check for previous session data and show banner if present
   const sessionData = await getSessionData();
